@@ -86,7 +86,7 @@ function gameOver(isWin) {
     console.log('Game Over')
     const pacmandying = new Audio('sounds/pacmandying.mp3');
     pacmandying.play();
-    gGame.isOn = false
+    if(!isWin) gGame.isOn = false
     const msg = isWin ? 'Yeaaaa You did it!' : 'You lose try again!'
     document.querySelector('h4').innerText = msg
     document.querySelector('.modal').classList.remove('hide')
@@ -102,7 +102,6 @@ function restart() {
     gEatenGhosts = []
     updateScore(0)
     clearInterval(cherryInterval)
-    clearInterval(gIntervalGhosts)
     clearInterval(gGhostImageSwitch)
     onOpenMsg()
 }
