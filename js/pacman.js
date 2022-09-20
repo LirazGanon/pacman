@@ -1,6 +1,6 @@
 'use strict'
 var isSuper = false
-const PACMAN = `<img src="/img/p-o.png" />`
+const PACMAN = `<img src="img/p-o.png" />`
 var gPacman
 
 var imgsUp = ['pacman-halfopen-u2.png', 'pacman-open-u2.png']
@@ -114,7 +114,7 @@ function changePacDirImg() {
         renderCell(gPacman.location, img)
     }, 100)
     setTimeout(function () {
-        img = `<img src="/img/p-c.png" />`
+        img = `<img src="img/p-c.png" />`
         renderCell(gPacman.location, img)
     }, 200)
     setTimeout(function () {
