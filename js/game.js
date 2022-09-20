@@ -12,11 +12,11 @@ const gGame = {
 }
 var gFoodCounter
 var gBoard
-var cherryInterval 
+var cherryInterval
 
 function onOpenMsg() {
     document.querySelector('.open-msg').classList.remove('hide')
-    document.body.addEventListener('keypress', onInit,{once : true});
+    document.body.addEventListener('keypress', onInit, { once: true });
     gBoard = buildBoard()
     createPacman(gBoard)
     createGhosts(gBoard)
@@ -36,7 +36,7 @@ function onInit() {
     // renderBoard(gBoard, '.board-container')
     document.querySelector('.open-msg').classList.add('hide')
     gFoodCounter = countCellContect(gBoard, FOOD)
-    cherryInterval = setInterval(placeCherry,15000)
+    cherryInterval = setInterval(placeCherry, 10000)
     gGame.isOn = true
     gIntervalGhosts = setInterval(moveGhosts, 800)
     gGhostImageSwitch = setInterval(renderGhostImg, 300)
@@ -53,7 +53,7 @@ function buildBoard() {
             if (i === 0 || i === size - 1 ||
                 j === 0 || j === size - 1 ||
                 (j === 3 && i > 4 && i < size - 2) ||
-                (j === 10 && i > 7 && i < size - 2)||
+                (j === 10 && i > 7 && i < size - 2) ||
                 (i === 3 && j > 4 && j < size - 2)) {
                 board[i][j] = WALL
             }
@@ -74,11 +74,16 @@ function updateScore(diff) {
 
 function placeCherry() {
     const emptyLocations = findContectLocation(gBoard, EMPTY)
-    if(!emptyLocations) return
+    if (!emptyLocations) return
     const randIdx = getRandomIntInclusive(0, emptyLocations.length - 1)
     const cherryLocation = emptyLocations[randIdx]
     gBoard[cherryLocation.i][cherryLocation.j] = CHERRY
     renderCell(cherryLocation, CHERRY)
+    setTimeout(() => {
+        if (gBoard[cherryLocation.i][cherryLocation.j] = CHERRY)
+            gBoard[cherryLocation.i][cherryLocation.j] = EMPTY
+        renderCell(cherryLocation, EMPTY)
+    }, 5000)
 
 }
 
@@ -86,7 +91,7 @@ function gameOver(isWin) {
     console.log('Game Over')
     const pacmandying = new Audio('sounds/pacmandying.mp3');
     pacmandying.play();
-    if(!isWin) gGame.isOn = false
+    if (!isWin) gGame.isOn = false
     const msg = isWin ? 'Yeaaaa You did it!' : 'You lose try again!'
     document.querySelector('h4').innerText = msg
     document.querySelector('.modal').classList.remove('hide')
