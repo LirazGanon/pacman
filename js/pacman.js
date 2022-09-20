@@ -18,7 +18,7 @@ function createPacman(board) {
         },
         isSuper: false
     }
-    gBoard[gPacman.location.i][gPacman.location.j] = PACMAN
+    board[gPacman.location.i][gPacman.location.j] = PACMAN
 }
 
 function onMovePacman(ev) {
@@ -28,7 +28,7 @@ function onMovePacman(ev) {
     // console.log('nextLocation', nextLocation)
     if (!nextLocation) return
 
-    const nextCellContent = gBoard[nextLocation.i][nextLocation.j]
+    const nextCellContent = board[nextLocation.i][nextLocation.j]
     // console.log('nextCellContent', nextCellContent)
     // return if cannot move
     if (nextCellContent === WALL) return
@@ -52,7 +52,9 @@ function onMovePacman(ev) {
         waka.play();
         setTimeout(function () {
             isSuper = false
+            console.log(gEatenGhosts);
             gGhosts = gGhosts.concat(gEatenGhosts)
+            gEatenGhosts=[]
 
         }, 5000)
         // superMode()
@@ -61,17 +63,17 @@ function onMovePacman(ev) {
 
     // moving from current location:
     // update the model
-    gBoard[gPacman.location.i][gPacman.location.j] = EMPTY
+    board[gPacman.location.i][gPacman.location.j] = EMPTY
     // update the DOM
     renderCell(gPacman.location, EMPTY)
     // Move the pacman to new location:
     // update the model
     gPacman.location = nextLocation
-    gBoard[gPacman.location.i][gPacman.location.j] = PACMAN
+    board[gPacman.location.i][gPacman.location.j] = PACMAN
     // update the DOM
     changePacDirImg()
 
-    if (gFoodCounter < 0) gameOver(true)
+    if (gFoodCounter === 0) gameOver(true)
 
 }
 

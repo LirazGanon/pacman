@@ -6,40 +6,41 @@ const EMPTY = ' '
 const SUPERFOOD = '🧆'
 const CHERRY = '🍒'
 
+
 const gGame = {
     score: 0,
     isOn: false
 }
 var gFoodCounter
-var gBoard
+var board
 var cherryInterval
+
 
 function onOpenMsg() {
     document.querySelector('.open-msg').classList.remove('hide')
     document.body.addEventListener('keypress', onInit, { once: true });
-    gBoard = buildBoard()
-    createPacman(gBoard)
-    createGhosts(gBoard)
+    board = buildBoard()
+    createPacman(board)
+    createGhosts(board)
     // Dom
-    renderBoard(gBoard, '.board-container')
+    renderBoard(board, '.board-container')
 }
 
 function onInit() {
     const intro = new Audio('sounds/intro.mp3');
     intro.play();
-    // Model:
-    // gBoard = buildBoard()
-    // createPacman(gBoard)
-    // createGhosts(gBoard)
-
-    // Dom
-    // renderBoard(gBoard, '.board-container')
     document.querySelector('.open-msg').classList.add('hide')
-    gFoodCounter = countCellContect(gBoard, FOOD)
-    cherryInterval = setInterval(placeCherry, 10000)
     gGame.isOn = true
+    gFoodCounter = countCellContect(board, FOOD)
+    console.log(gFoodCounter);
+    // debugger
+    cherryInterval = setInterval(placeCherry, 10000)
     gIntervalGhosts = setInterval(moveGhosts, 800)
-    gGhostImageSwitch = setInterval(renderGhostImg, 300)
+    setTimeout(() => {
+        gGhostImageSwitch = setInterval(renderGhostImg, 300)
+    }, 800);
+
+
 }
 
 function buildBoard() {
@@ -54,12 +55,26 @@ function buildBoard() {
                 j === 0 || j === size - 1 ||
                 (j === 3 && i > 4 && i < size - 2) ||
                 (j === 10 && i > 7 && i < size - 2) ||
-                (i === 3 && j > 4 && j < size - 2)) {
+                (i === 3 && j > 4 && j < size - 5)) {
                 board[i][j] = WALL
             }
         }
 
     }
+    board[5][5] = board[6][5] = board[6][6] = board[6][7] = WALL
+    board[4][10] = board[6][7] = board[6][9] = board[6][10] = WALL
+    board[4][12] = board[5][12] = board[6][12] = board[7][12] = WALL
+    board[9][12] = board[9][13] = board[3][2] = board[2][2] = WALL
+    board[2][3] = board[2][12] = board[2][13] = board[3][13] = WALL
+    board[12][5] = board[11][5] = board[10][5]=board[9][5] = WALL
+    board[9][8] = board[9][7]=board[9][6] = WALL
+    board[10][8] = board[11][8] = board[12][8] = WALL
+
+    board[4][6] = board[4][7] = board[4][8] = board[5][8] = board[4][9] = EMPTY
+    board[5][7] = board[5][8] = board[6][8] = board[4][5] = EMPTY
+    board[5][6] = board[5][9] = board[5][10] = EMPTY
+   
+
     board[1][1] = board[1][board.length - 2] = SUPERFOOD
     board[board.length - 2][1] = board[board.length - 2][board.length - 2] = SUPERFOOD
     return board
@@ -73,15 +88,15 @@ function updateScore(diff) {
 }
 
 function placeCherry() {
-    const emptyLocations = findContectLocation(gBoard, EMPTY)
+    const emptyLocations = findContectLocation(board, EMPTY)
     if (!emptyLocations) return
     const randIdx = getRandomIntInclusive(0, emptyLocations.length - 1)
     const cherryLocation = emptyLocations[randIdx]
-    gBoard[cherryLocation.i][cherryLocation.j] = CHERRY
+    board[cherryLocation.i][cherryLocation.j] = CHERRY
     renderCell(cherryLocation, CHERRY)
     setTimeout(() => {
-        if (gBoard[cherryLocation.i][cherryLocation.j] = CHERRY)
-            gBoard[cherryLocation.i][cherryLocation.j] = EMPTY
+        if (board[cherryLocation.i][cherryLocation.j] = CHERRY)
+            board[cherryLocation.i][cherryLocation.j] = EMPTY
         renderCell(cherryLocation, EMPTY)
     }, 5000)
 
@@ -100,11 +115,14 @@ function gameOver(isWin) {
 }
 
 function restart() {
+    console.log('im running');
     document.querySelector('.modal').classList.add('hide')
     gGame.score = 0
     gFoodCounter = 0
     gId = 0
     gEatenGhosts = []
+    gIsFisrtImg = true
+    gCurrGhostImgs = ghostImgs1
     updateScore(0)
     clearInterval(cherryInterval)
     clearInterval(gGhostImageSwitch)
