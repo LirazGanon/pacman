@@ -1,0 +1,84 @@
+body {
+  text-align: center;
+  background-color: black;
+  color:white;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+table{
+  margin: auto;
+}
+
+.open-msg{
+  position: relative;
+  bottom: 545px;
+  font-size: 0.8rem;
+  font-family: 'Press Start 2P', cursive;
+  color: rgb(247, 254, 51);
+}
+
+h2{
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 400;
+  letter-spacing: 5px; 
+  font-size: 2.5rem;
+  margin:20px 0 5px;
+}
+
+.modal{
+  padding: 20px;
+  /* width: 300px;
+  height: 150px; */
+ 
+  /* background-color: #fff; */
+  position: relative;
+  bottom:500px;
+  margin: auto;
+  color: rgb(255, 255, 126);
+  animation-name: modal;
+  animation-duration: 4s;
+  animation-delay: -2s;
+}
+
+h3{
+  font-family: 'Press Start 2P', cursive;
+ 
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px #ff0000;
+}
+
+h4{
+  font-family: 'Orbitron', sans-serif;
+
+font-size: 30px;
+  color: rgb(240, 255, 204);
+  text-shadow: 2px 2px #000000;
+}
+@keyframes modal {
+  0%   {color:rgb(0, 0, 0); left:0px; top:250px;}
+   25%  {color:rgb(0, 0, 0); left:0; top:250px;} 
+  50%  {color:rgb(0, 0, 0); left:0; top:250px;}
+  /* 75%  {background-color:green; left:0px; top:-200px;}  */
+  100% {color:rgb(255, 255, 126); left:0px; top:-500px;}
+}
+
+.hide{
+  display: none;
+}
+
+button{
+  padding: 10px;
+font-size: 2rem;
+border-radius: 5px;
+/* .formLine {
+  margin:10px;
+  padding:10px;
+  background-color: cornflowerblue;
+} */
